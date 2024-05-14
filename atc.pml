@@ -56,7 +56,6 @@ active [5] proctype Airplane() {
 
 	in_air:
 		do
-		:: skip;
 		:: goto approaching;
 		od;
 
