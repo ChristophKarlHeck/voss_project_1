@@ -20,7 +20,8 @@ int airport_capacity = 4
 /*LTL*/
 //ltl p1 { [] (airplane_on_runway_in + airplane_on_runway_out <= 1) } // safety property
 //ltl p2 { [] (airplane_on_taxiway_in + airplane_on_taxiway_out <= 2) } // safety property
-//ltl p3 { [] (airplane_at_gate <= 2)} // safety property 
+//ltl p3 { [] (airplane_at_gate <= 2)} // safety property
+//ltl p4 { [] <> }
 
 active [1] proctype Tower() {
 	do
