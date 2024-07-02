@@ -5,6 +5,14 @@ Maier, Niklas
 Heck, Christoph
 */ 
 
+#define F1 ([] <> Airplane[1]@approaching -> [] <> Airplane[1]@on_runway_in)
+#define F2 ([] <> Airplane[2]@approaching -> [] <> Airplane[2]@on_runway_in)
+#define F3 ([] <> Airplane[3]@approaching -> [] <> Airplane[3]@on_runway_in)
+#define F4 ([] <> Airplane[4]@approaching -> [] <> Airplane[4]@on_runway_in)
+#define F5 ([] <> Airplane[5]@approaching -> [] <> Airplane[5]@on_runway_in)
+
+#define F (F1 && F2 && F3 && F4 && F5)
+
 
 
 mtype = {cleared_to_land, cleared_for_take_off, cleared_to_taxi_in, cleared_to_taxi_out, go_around}
@@ -15,13 +23,17 @@ int airplane_on_runway_out = 0;
 int airplane_on_taxiway_in = 0;
 int airplane_on_taxiway_out = 0;
 int airplane_at_gate = 0;
-int airport_capacity = 4
+int airport_capacity = 4;
 
 /*LTL*/
 //ltl p1 { [] (airplane_on_runway_in + airplane_on_runway_out <= 1) } // safety property
 //ltl p2 { [] (airplane_on_taxiway_in + airplane_on_taxiway_out <= 2) } // safety property
 //ltl p3 { [] (airplane_at_gate <= 2)} // safety property
-//ltl p4 { [] <> }
+//ltl p4 {  F -> (([] <> Airplane[1]@on_runway_in) && ([] <> Airplane[1]@on_runway_out))  }
+
+//ltl p5 { F -> ([]<> Airplane[1]@on_taxiway_in && []<> Airplane[2]@on_taxiway_in && []<> Airplane[3]@on_taxiway_in && []<> Airplane[4]@on_taxiway_in && []<> Airplane[5]@on_taxiway_in)}
+
+ltl p6 {F -> [](Airplane[1]@approaching -> <>Airplane[1]@at_gate)}
 
 active [1] proctype Tower() {
 	do
